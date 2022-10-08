@@ -13,11 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('views', function (Blueprint $table) {
-            $table->id();
+        Schema::create('leituras_agua', function (Blueprint $table) {
+            $table->uuid('id')->primary();
             $table->uuid('user_id')->nullable(false);
-            $table->uuid('lesson_id')->nullable(false);
-            $table->integer('qty')->default(1);
+            $table->integer('leitura_numero');
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('views');
+        Schema::dropIfExists('leituras_agua');
     }
 };

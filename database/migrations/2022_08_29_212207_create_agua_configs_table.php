@@ -13,12 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('reply_support', function (Blueprint $table) {
+        Schema::create('agua_configs', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('user_id')->nullable(false);
-            $table->uuid('support_id')->nullable(false);
-            $table->text('description');
-            $table->softDeletes();
+            $table->boolean('atual')->nullable(false);
+            $table->decimal('valor_cubico')->nullable(false);
+            $table->integer('meta_cubico');
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reply_support');
+        Schema::dropIfExists('agua_configs');
     }
 };

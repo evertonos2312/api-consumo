@@ -15,7 +15,12 @@ use Illuminate\Support\Facades\Route;
 Route::post('/auth', [AuthController::class, 'auth']);
 Route::post('/forgot-password', [ResetPasswordController::class, 'sendResetLink'])->middleware('guest');
 
+
 Route::middleware(['auth:sanctum'])->group(function (){
+    Route::get('/users', function () {
+    })->middleware(['auth:sanctum', 'ability:create-users']);
+
+
     Route::get('/me', [AuthController::class, 'me']);
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::apiResource('/courses/{course}/lessons', LessonController::class);

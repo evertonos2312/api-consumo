@@ -13,15 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('submodules', function (Blueprint $table) {
+        Schema::create('energia_configs', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('nome');
-            $table->uuid('module_id')->nullable(false);
-            $table->boolean('status')->default(0);
-            $table->integer('id_mp')->nullable();
-            $table->string('usuario_modificado')->nullable();
+            $table->boolean('atual')->nullable(false);
+            $table->decimal('valor_kwh')->nullable(false);
+            $table->integer('meta_kwh');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -32,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('submodules');
+        Schema::dropIfExists('energia_configs');
     }
 };

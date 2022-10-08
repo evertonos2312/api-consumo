@@ -13,13 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('supports', function (Blueprint $table) {
+        Schema::create('leituras_energia', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('user_id')->nullable(false);
-            $table->uuid('lesson_id')->nullable(false);
-            $table->enum('status', ['P', 'A', 'C'])->default('P'); //P = Pendente, A = Aberto, C = Concluido
-            $table->text('description');
-            $table->softDeletes();
+            $table->integer('leitura_numero');
             $table->timestamps();
         });
     }
@@ -31,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('supports');
+        Schema::dropIfExists('leituras_energia');
     }
 };

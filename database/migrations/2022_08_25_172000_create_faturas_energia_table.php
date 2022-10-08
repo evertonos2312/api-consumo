@@ -13,12 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('modules', function (Blueprint $table) {
+        Schema::create('faturas_energia', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('nome');
-            $table->boolean('status')->default(0);
-            $table->integer('id_mp')->nullable();
-            $table->string('usuario_modificado')->nullable();
+            $table->string('mes_referencia')->nullable(false);
+            $table->integer('leitura_numero');
+            $table->integer('consumo');
+            $table->decimal('valor_conta');
+            $table->timestamp('prox_leitura');
+            $table->boolean('atingiu_meta')->default(0);
+            $table->uuid('user_create')->nullable(false);
             $table->timestamps();
             $table->softDeletes();
         });
@@ -31,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('modules');
+        Schema::dropIfExists('faturas_energia');
     }
 };

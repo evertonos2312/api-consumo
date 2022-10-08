@@ -14,17 +14,6 @@ class AuthController extends Controller
     public function auth(AuthRequest $request)
     {
         $user = User::where('email', $request->email)->first();
-        if($user && !$user->password_updated){
-            if(!$user->old_password == md5($request->password)){
-                throw ValidationException::withMessages([
-                    'credentials' => ['The provided credentials are incorrect.'],
-                ]);
-            }
-            $user->password =  Hash::make($request->password);
-            $user->old_password = null;
-            $user->password_updated = true;
-            $user->save();
-        }
         if(!$user || !Hash::check($request->password, $user->password)){
             throw ValidationException::withMessages([
                 'credentials' => ['The provided credentials are incorrect.'],
@@ -32,7 +21,11 @@ class AuthController extends Controller
         }
 //        if($request->has('logout_others_devices')){        }
         $user->tokens()->delete();
-        $token = $user->createToken($request->device_name)->plainTextToken;
+        $ability = [''];
+        if($user->isMaster){
+            $ability = ['create-users'];
+        }
+        $token = $user->createToken($request->device_name, $ability)->plainTextToken;
         return response()->json([
             'token' => $token
         ]);
