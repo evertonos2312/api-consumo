@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\{ConfigEnergiaController,
     SupportController};
 use Illuminate\Support\Facades\Route;
 
+
 Route::post('/auth', [AuthController::class, 'auth']);
 Route::post('/forgot-password', [ResetPasswordController::class, 'sendResetLink'])->middleware('guest');
 
