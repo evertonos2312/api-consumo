@@ -31,8 +31,4 @@ Route::middleware(['auth:sanctum'])->group(function (){
     Route::post('/replies', [ReplySupportController::class, 'createReply']);
 });
 
-Route::get('/', function () {
-    return response()->json([
-        'success' => false
-    ]);
-});
+
