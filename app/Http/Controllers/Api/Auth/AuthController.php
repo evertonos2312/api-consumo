@@ -22,7 +22,7 @@ class AuthController extends Controller
 //        if($request->has('logout_others_devices')){        }
         $user->tokens()->delete();
         $ability = [''];
-        if($user->isMaster){
+        if($user->is_admin){
             $ability = ['create-users'];
         }
         $token = $user->createToken($request->device_name, $ability)->plainTextToken;

@@ -2,25 +2,25 @@
 
 namespace App\Services;
 
-use App\Repositories\CourseRepository;
+use App\Repositories\ConfigEnergiaRepository;
 
-class CourseService
+class ConfigEnergiaService
 {
     protected $repository;
 
-    public function __construct(CourseRepository $repository)
+    public function __construct(ConfigEnergiaRepository $repository)
     {
         $this->repository = $repository;
     }
 
-    public function getCourses()
+    public function getConfigs()
     {
-        return $this->repository->getAllCourses();
+        return $this->repository->getAllConfigs();
     }
 
-    public function createNewCourse(array $data)
+    public function createNewConfig(array $data)
     {
-        return $this->repository->createNewCourse($data);
+        return $this->repository->createNewConfig($data);
     }
 
     public function getCourse(string $identify)

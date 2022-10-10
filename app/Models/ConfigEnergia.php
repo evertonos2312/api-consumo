@@ -9,21 +9,17 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
-class Course extends Model
+class ConfigEnergia extends Model
 {
     use HasFactory, SoftDeletes, UuidTrait;
 
     public $incrementing = false;
     protected $keyType = 'uuid';
+    protected $table = 'energia_configs';
 
     protected $fillable = [
-        'nome', 'categoria',
-        'subcategoria', 'tipo', 'destaque',
-        'especializacao', 'id_mp', 'usuario_modificado'
+        'atual', 'valor_kwh',
+        'meta_kwh', 'tipo'
     ];
 
-    public function lessons()
-    {
-        return $this->hasMany(Lesson::class);
-    }
 }

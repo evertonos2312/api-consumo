@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CourseResource extends JsonResource
+class ConfigEnergiaResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,14 +17,10 @@ class CourseResource extends JsonResource
     {
         return [
             'identify' => $this->id,
-            'nome' => $this->nome,
-            'categoria' => $this->categoria,
-            'subcategoria' => $this->subcategoria,
-            'tipo' => $this->tipo,
-            'destaque' => $this->destaque,
-            'id_mp' => $this->id_mp,
+            'atual' => $this->atual ? 'Sim' : 'Não',
+            'valor_kwh' => $this->valor_kwh,
+            'meta_kwh' => $this->meta_kwh,
             'data' => Carbon::make($this->created_at)->format('Y-m-d'),
-            'turmas' => LessonResource::collection($this->whenLoaded('lessons'))
         ];
     }
 }

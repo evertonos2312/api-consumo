@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Models\Course;
+use App\Models\ConfigEnergia;
 use App\Models\Module;
 use App\Models\Submodule;
 use Illuminate\Support\Facades\Cache;

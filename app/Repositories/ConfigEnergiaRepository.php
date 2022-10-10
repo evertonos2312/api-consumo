@@ -2,29 +2,27 @@
 
 namespace App\Repositories;
 
-use App\Models\Course;
+use App\Models\ConfigEnergia;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
 
-class CourseRepository
+class ConfigEnergiaRepository
 {
     protected $entity;
 
-    public function __construct(Course $course)
+    public function __construct(ConfigEnergia $course)
     {
         $this->entity = $course;
     }
 
-    public function getAllCourses()
+    public function getAllConfigs()
     {
-        return Cache::remember('courses', 900, function () {
-            return $this->entity->withWhereHas('lessons', function($db) {
-                $db->whereDate('lessons.inicio', '>',  Carbon::now('America/Sao_Paulo'));
-            })->get();
+        return Cache::remember('configEnergia', 900, function () {
+           return $this->entity->get();
         });
     }
 
-    public function createNewCourse(array $data)
+    public function createNewConfig(array $data)
     {
         return $this->entity->create($data);
     }

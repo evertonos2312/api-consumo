@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Repositories\CourseRepository;
+use App\Repositories\ConfigEnergiaRepository;
 use App\Repositories\LessonRepository;
 
 class LessonService
@@ -12,7 +12,7 @@ class LessonService
 
     public function __construct(
         LessonRepository $lessonRepository,
-        CourseRepository $courseRepository
+        ConfigEnergiaRepository $courseRepository
     ) {
         $this->lessonRepository = $lessonRepository;
         $this->courseRepository = $courseRepository;

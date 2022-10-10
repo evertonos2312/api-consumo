@@ -4,7 +4,7 @@
 use App\Http\Controllers\Api\Auth\{
     AuthController,
     ResetPasswordController};
-use App\Http\Controllers\Api\{CourseController,
+use App\Http\Controllers\Api\{ConfigEnergiaController,
     LessonController,
     ModuleController,
     ReplySupportController,
@@ -19,13 +19,13 @@ Route::post('/forgot-password', [ResetPasswordController::class, 'sendResetLink'
 Route::middleware(['auth:sanctum'])->group(function (){
     Route::get('/users', function () {
     })->middleware(['auth:sanctum', 'ability:create-users']);
+    Route::apiResource('/config-energy', ConfigEnergiaController::class);
 
 
     Route::get('/me', [AuthController::class, 'me']);
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::apiResource('/courses/{course}/lessons', LessonController::class);
     Route::post('/lesson/view', [LessonController::class, 'markLessonViewed']);
-    Route::apiResource('/courses', CourseController::class);
     Route::apiResource('/modules/{module}/submodules', SubmoduleController::class);
     Route::apiResource('/modules', ModuleController::class);
     Route::get('/supports', [SupportController::class, 'index']);
