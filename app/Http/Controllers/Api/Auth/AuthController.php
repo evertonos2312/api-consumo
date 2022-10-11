@@ -42,4 +42,9 @@ class AuthController extends Controller
         $user = auth()->user();
         return new UserResource($user);
     }
+
+    public function store()
+    {
+        
+    }
 }

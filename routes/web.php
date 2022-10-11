@@ -6,3 +6,9 @@ Route::get('/', function () {
         'success' => false
     ]);
 });
+
+Route::get('/login', function (){
+    return response()->json([
+        'message' => 'Unauthenticated'
+    ]);
+})->name('login');
