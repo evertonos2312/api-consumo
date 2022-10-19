@@ -1,8 +1,7 @@
 <?php
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return response()->json([
-        'success' => false
-    ]);
-});
+
+Route::any('/{all}', function () {
+    return redirect()->to(env('URL_FRONTEND'));
+})->where('all', '^(?!api).*$');

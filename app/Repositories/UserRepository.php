@@ -6,20 +6,22 @@ use App\Models\ConfigEnergia;
 use App\Models\Lesson;
 use App\Models\Module;
 use App\Models\Submodule;
+use App\Models\User;
 use App\Models\View;
 use App\Repositories\Traits\RepositoryTrait;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Hash;
 
-class LessonRepository
+class UserRepository
 {
     use RepositoryTrait;
 
     protected $entity;
 
-    public function __construct(Lesson $lesson)
+    public function __construct(User $user)
     {
-        $this->entity = $lesson;
+        $this->entity = $user;
     }
 
     public function getLessonsCourse(string $courseId)
@@ -30,15 +32,19 @@ class LessonRepository
 
     }
 
-    public function createNewLesson(string $courseId, array $data)
+    public function createNewUser(array $data)
     {
-        if(isset($data['max_cancelamento'])) {
-            $data['max_cancelamento'] = Carbon::createFromFormat('d/m/Y H:i',$data['max_cancelamento'])->format('Y-m-d H:i:s') ;
+        $permissionLevel = match ($data['permission_code']) {
+            env('REGISTER_USER') => 'user_register',
+            env('ADMIN_USER') => 'admin_register',
+            default => '',
+        };
+        if(empty($permissionLevel)){
+            return false;
         }
-        $data['course_id'] = $courseId;
-        $data['inicio'] =   Carbon::createFromFormat('d/m/Y H:i',$data['inicio'])->format('Y-m-d H:i:s');
-        $data['termino'] = Carbon::createFromFormat('d/m/Y H:i',$data['termino'])->format('Y-m-d H:i:s');
-        Cache::forget('courses');
+        $data['password'] = Hash::make($data['password']);
+        $data['is_admin'] = $permissionLevel == 'admin_register';
+        $data['permission'] = $permissionLevel == 'admin_register' ? 'w' : 'r';
         return $this->entity->create($data);
     }
 
@@ -59,17 +65,17 @@ class LessonRepository
 
     public function updateLessonByUuid(string $courseId, string $identify, array $data)
     {
-        $lesson = $this->getLessonByUuid($identify);
+        $user = $this->getLessonByUuid($identify);
         $data['course_id'] = $courseId;
         Cache::forget('courses');
-        return $lesson->update($data);
+        return $user->update($data);
     }
 
     public function deleteLessonByUuid(string $identify)
     {
-        $lesson = $this->getLessonByUuid($identify);
+        $user = $this->getLessonByUuid($identify);
         Cache::forget('courses');
-        return $lesson->delete();
+        return $user->delete();
     }
 
     public function markLessonViewed(string $identify)

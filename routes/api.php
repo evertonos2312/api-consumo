@@ -9,12 +9,14 @@ use App\Http\Controllers\Api\{ConfigEnergiaController,
     ModuleController,
     ReplySupportController,
     SubmoduleController,
-    SupportController};
+    SupportController,
+    UserController};
 use Illuminate\Support\Facades\Route;
 
 
 Route::post('/auth', [AuthController::class, 'auth']);
 Route::post('/forgot-password', [ResetPasswordController::class, 'sendResetLink'])->middleware('guest');
+Route::post('/create-user', [UserController::class, 'store'])->middleware('guest');
 
 
 Route::middleware(['auth:sanctum'])->group(function (){
